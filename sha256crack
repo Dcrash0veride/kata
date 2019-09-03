@@ -1,0 +1,16 @@
+"""This kata aims to show the vulnerabilities of hashing functions for short messages.
+
+When provided with a SHA-256 hash, return the value that was hashed. You are also given the characters that make the expected value, but in alphabetical order.
+
+The returned value is less than 10 characters long. Return nil for Ruby and Crystal, None for Python, null for Java when the hash cannot be cracked with the given characters."""
+
+import hashlib
+from itertools import permutations
+def sha256_cracker(hash, chars):
+    combos = [''.join(p) for p in permutations(chars)]
+    for i in combos:
+        encoded = str.encode(i)
+        hash_object = hashlib.sha256(encoded)
+        hex_dig = hash_object.hexdigest()
+        if hex_dig == hash:
+            return i
